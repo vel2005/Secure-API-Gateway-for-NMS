@@ -1,0 +1,21 @@
+_format_version: "3.0"
+
+services:
+  - name: nms-backend-service
+    url: http://host.docker.internal:8080
+    plugins:
+      - name: rate-limiting
+        config:
+          minute: 100
+          policy: local
+          fault_tolerant: true
+          hide_client_headers: false
+    routes:
+      - name: nms-api-route
+        paths:
+          - /api
+          - /login
+          - /oauth2
+          - /.well-known
+        strip_path: false
+        preserve_host: true
